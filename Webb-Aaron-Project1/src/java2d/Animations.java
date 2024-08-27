@@ -40,6 +40,7 @@ public class Animations extends JPanel {
     public Animations() {
         setPreferredSize(new Dimension(800, 600));
         Timer animationTimer;  // A Timer that will emit events to drive the animation.
+        
         // Taken from AnimationStarter
         animationTimer = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -125,12 +126,23 @@ public class Animations extends JPanel {
 
     }
 
-    // Method taken directly from AnimationStarter.java Code
+    /**
+     * Sets up a new coordinate system
+     *
+     * @param Graphics g2 object, allows rendering
+     * @param double left (left of Viewport), used to calculate width
+     * @param double right (right of Viewport), used to calculate width
+     * @param double bottom (bottom of Viewport), used to calculate height
+     * @param double top (top of Viewport), used to calculate height
+     * @param preserveAspect boolean to determine if Aspect Ratio should be maintained
+     */
+    
     private void applyWindowToViewportTransformation(Graphics2D g2,
             double left, double right, double bottom, double top,
             boolean preserveAspect) {
         int width = getWidth();   // The width of this drawing area, in pixels.
         int height = getHeight(); // The height of this drawing area, in pixels.
+        
         if (preserveAspect) {
             // Adjust the limits to match the aspect ratio of the drawing area.
             double displayAspect = Math.abs((double) height / width);
@@ -147,10 +159,13 @@ public class Animations extends JPanel {
                 left -= excess / 2;
             }
         }
+        
         g2.scale(width / (right - left), height / (bottom - top));
         g2.translate(-left, -top);
+        
         double pixelWidth = Math.abs((right - left) / width);
         double pixelHeight = Math.abs((bottom - top) / height);
+        
         pixelSize = (float) Math.max(pixelWidth, pixelHeight);
     }
 }

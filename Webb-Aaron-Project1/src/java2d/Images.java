@@ -98,7 +98,7 @@ public class Images{
 	        {0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0},
 	        {0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0}};
 
-    // Methods to apply pixel color
+    // Method to apply pixel color
     public BufferedImage getImage(int[][] data) {
         BufferedImage image = new BufferedImage(IMGSIZEX, IMGSIZEY,
                 BufferedImage.TYPE_INT_RGB);

@@ -1,2 +1,0 @@
-# Animations
-CMSC405

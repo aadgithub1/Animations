@@ -8,7 +8,7 @@ import javax.swing.JFrame;
  * Filename: Frame
  * Author: Aaron Webb
  * Date: Aug 27, 2024
- * Description: Create a JFrame object, to hold the Animations
+ * Description: Create a JFrame object to hold the Animations
  * panel.
  */
 
@@ -16,9 +16,9 @@ public class Frame extends JFrame{
 	
 	private Frame() {
 		Animations animations = new Animations();
-		setContentPane(animations);
-		setTitle("Java2D Animation");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // End program when window closes.
+        setContentPane(animations);
+        setTitle("Java2D Animation");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // End program when window closes.
         pack();  // Set window size based on the preferred sizes of its contents.
         setResizable(false); // Don't let user resize window.
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
