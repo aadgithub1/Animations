@@ -1,37 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package java2d;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-/**
- *
- * @author aaron
+/*
+ * Filename: Animations
+ * Author: Aaron Webb
+ * Date: Aug 27, 2024
+ * Description: Create a JPanel object, alters transforms,
+ * draws images, and maintains timer for animation execution.
  */
+
 public class Animations extends JPanel {
 
     // A counter that increases by one in each frame.
     private int frameNumber;
-    // The time, in milliseconds, since the animation started.
-    private long elapsedTimeMillis;
-    // This is the measure of a pixel in the coordinate system
-    // set up by calling the applyLimits method.  It can be used
-    // for setting line widths, for example.
     private float pixelSize;
 
     static int translateX = 0;
@@ -39,88 +31,51 @@ public class Animations extends JPanel {
     static double rotation = 0.0;
     static double scaleX = 1.0;
     static double scaleY = 1.0;
+    
     Images myImages = new Images();
     BufferedImage beaker = myImages.getImage(Images.beaker);
     BufferedImage cross = myImages.getImage(Images.cross);
     BufferedImage welderMask = myImages.getImage(Images.welderMask);
     
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        JFrame window;
-        window = new JFrame("Java Animation");  // The parameter shows in the window title bar.
-        final Animations panel = new Animations(); // The drawing area.
-        window.setContentPane(panel); // Show the panel in the window.
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // End program when window closes.
-        window.pack();  // Set window size based on the preferred sizes of its contents.
-        window.setResizable(false); // Don't let user resize window.
-        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        window.setLocation( // Center window on screen.
-                (screen.width - window.getWidth()) / 2,
-                (screen.height - window.getHeight()) / 2);
+    public Animations() {
+        setPreferredSize(new Dimension(800, 600));
         Timer animationTimer;  // A Timer that will emit events to drive the animation.
-        final long startTime = System.currentTimeMillis();
         // Taken from AnimationStarter
-        // Modified to change timing and allow for recycling
         animationTimer = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                if (panel.frameNumber >= 4) {
-                    panel.frameNumber = 0;
+                if (frameNumber >= 4) {
+                    frameNumber = 0;
                 } else {
-                    panel.frameNumber++;
+                    frameNumber++;
                 }
-                panel.elapsedTimeMillis = System.currentTimeMillis() - startTime;
-                panel.repaint();
+                repaint();
             }
         });
-        window.setVisible(true); // Open the window, making it visible on the screen.
         animationTimer.start();  // Start the animation running.
     }
 
-    public Animations() {
-        // Size of Frame
-        setPreferredSize(new Dimension(800, 600));
-    }
-
-    // This is where all of the action takes place
-    // Code taken from AnimationStarter.java but modified to add the specific Images
-    // Also added looping structure for Different transformations
+    //Taken from AnimationStarter, but with added loop
     protected void paintComponent(Graphics g) {
 
-        /* First, create a Graphics2D drawing context for drawing on the panel.
-         * (g.create() makes a copy of g, which will draw to the same place as g,
-         * but changes to the returned copy will not affect the original.)
-         */
         Graphics2D g2 = (Graphics2D) g.create();
 
-        /* Turn on antialiasing in this graphics context, for better drawing.
-         */
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        /* Fill in the entire drawing area with white.
-         */
         g2.setPaint(Color.WHITE);
-        g2.fillRect(0, 0, getWidth(), getHeight()); // From the old graphics API!
+        g2.fillRect(0, 0, getWidth(), getHeight()); //From the old graphics API!
 
-        /* Here, I set up a new coordinate system on the drawing area, by calling
-         * the applyLimits() method that is defined below.  Without this call, I
-         * would be using regular pixel coordinates.  This function sets the value
-         * of the global variable pixelSize, which I need for stroke widths in the
-         * transformed coordinate system.
-         */
-        // Controls your zoom and area you are looking at
+        //Create new coordinate system
+        //Controls your zoom and area you are looking at
         applyWindowToViewportTransformation(g2, -75, 75, -75, 75, true);
 
         AffineTransform savedTransform = g2.getTransform();
-        System.out.println("Frame is " + frameNumber); 
+        
+        System.out.println("Frame is " + frameNumber);
+        
         switch (frameNumber) {
-	        case 0: // First frame translates -5 in x direction, 7 in y
+	        case 0: // Reset transforms
 	            translateX = 0;
 	            translateY = 0;
-	            scaleX = 1.0; //resets images
+	            scaleX = 1.0;
 	            scaleY = 1.0;
 	            rotation = 0;
 	            break;
@@ -198,5 +153,4 @@ public class Animations extends JPanel {
         double pixelHeight = Math.abs((bottom - top) / height);
         pixelSize = (float) Math.max(pixelWidth, pixelHeight);
     }
-
 }

@@ -1,26 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package java2d;
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-/**
- *
- * @author jim
+/*
+ * Filename: Images
+ * Author: Aaron Webb
+ * Date: Aug 27, 2024
+ * Description: Holds image data in 2D array and colors them according
+ * to the getImage method implementation.
  */
+
 public class Images{
-    // Constants
     // X Size of Images
     private final static int IMGSIZEX = 25;
     // Y Size of Images
     private final static int IMGSIZEY = 25;
-    
-    // Define a Simple Images based on the Alphabet
-    // Use static so can send them into the getImage() method remotely
-    // Note these are 10x10 and can be modified to any desired
-    // image size by adding or removing rows and columns
+
    public static int[][] welderMask = {
         {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
         {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -101,18 +97,15 @@ public class Images{
 	        {0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0},
 	        {0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0},
 	        {0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0}};
-   
 
-  // You can add more images and interesting shapes here
-
-    // Methods to apply pixel colors and
+    // Methods to apply pixel color
     public BufferedImage getImage(int[][] data) {
         BufferedImage image = new BufferedImage(IMGSIZEX, IMGSIZEY,
                 BufferedImage.TYPE_INT_RGB);
-        for (int x = 0; x < IMGSIZEX; x++) {
-            for (int y = 0; y < IMGSIZEY; y++) {
+        for (int x = 0; x < IMGSIZEX; x++) {//traverse rows
+            for (int y = 0; y < IMGSIZEY; y++) {//traverse columns
                 int pixelColor = data[x][y];
-                // Set Colors based on Binary Image value
+                // Set Colors based on value
                 if (pixelColor == 0) {
                     pixelColor = Color.WHITE.getRGB();
                 } else if (pixelColor == 1){
